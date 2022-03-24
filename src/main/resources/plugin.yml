@@ -1,0 +1,12 @@
+name: GriefReportPlugin
+version: '${project.version}'
+main: r4mblerplugins.griefreportplugin.GriefReportPlugin
+api-version: 1.18
+authors: [ R4mBLe_ ]
+description: simply plugin for admins and moderators minecraft servers
+commands:
+  grief:
+    aliases: [g, grief, griefing]
+  grieflist:
+    aliases: [glist, grieflist, listgrief]
+    usage: /<command> [reason]
