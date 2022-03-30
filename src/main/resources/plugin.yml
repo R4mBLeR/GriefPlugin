@@ -10,3 +10,17 @@ commands:
   grieflist:
     aliases: [glist, grieflist, listgrief]
     usage: /<command> [reason]
+
+permissions:
+  GriefPluginAllPerm.*:
+    description: all permission on plugin
+    children:
+      GriefReportPlugin.SendGriefMessage: true
+      GriefReportPlugin.GriefListManage: true
+
+  GriefReportPlugin.SendGriefMessage:
+    description: add grief to grief list
+    default: true
+  GriefReportPlugin.GriefListManage:
+    description: open and manage grief list(for admins, moderators, helpers)
+    default: op

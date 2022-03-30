@@ -18,29 +18,34 @@ public class grief_list extends AbstractCommand{
     @Override
     public void execute(CommandSender sender, String label, String[] args) {
         Player player= (Player) sender;
+        if (!player.hasPermission("GriefReportPlugin.GriefListManage"))
+        {
+            player.sendMessage(org.bukkit.ChatColor.RED + "you don't have permission");
+            return;
+        }
         if (GriefList.List.size()==0)
         {
-            player.sendMessage(ChatColor.RED+"Список грифов пуст");
+            player.sendMessage(ChatColor.RED+"grief list is empty");
             return;
         }
         if (args.length==0) {
-            player.sendMessage("Список грифов:");
+            player.sendMessage("grief list:");
             for (ItemGrief item : GriefList.List) {
                 String command = "/tp " + sender.getName() + " " + item.location.getX() + " " + item.location.getY() + " " + item.location.getZ() + " ";
-                TextComponent component = new TextComponent("Игрок: ");
+                TextComponent component = new TextComponent("sender: ");
                 TextComponent _name = new TextComponent(item.PlayerName);
                 _name.setColor(ChatColor.GOLD);
                 component.addExtra(_name);
-                TextComponent component1 = new TextComponent(" Подробности грифа: ");
+                TextComponent component1 = new TextComponent("details: ");
                 component.addExtra(component1);
                 TextComponent reason= new TextComponent(item.Reason);
                 reason.setColor(ChatColor.GOLD);
                 component.addExtra(reason);
-                TextComponent cordinates = new TextComponent(" [ТЕЛЕПОРТ]");
+                TextComponent cordinates = new TextComponent(" [TELEPORT]");
                 cordinates.setColor(ChatColor.GREEN);
                 cordinates.setBold(true);
                 cordinates.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command));
-                cordinates.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Кликните для телепорта").color(ChatColor.ITALIC).create()));
+                cordinates.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("click to teleport").color(ChatColor.ITALIC).create()));
                 component.addExtra(cordinates);
                 player.spigot().sendMessage(component);
             }
@@ -51,22 +56,18 @@ public class grief_list extends AbstractCommand{
                 try {
                     int i=Integer.parseInt(args[1])-1;
                     GriefList.List.remove(i);
-                    player.sendMessage(ChatColor.GREEN + "Гриф удалён из списка");
+                    player.sendMessage(ChatColor.GREEN + "grief delete from list");
                 } catch (Throwable t) {
-                    player.sendMessage(ChatColor.RED + "Неверно указан ID грифа");
+                    player.sendMessage(ChatColor.RED + "incorrect grief ID");
                 }
                 return;
             }
             if (args[0].equals("clear")) {
-                try {
                     GriefList.List.clear();
-                    player.sendMessage(ChatColor.GREEN + "Список грифов очищен");
-                } catch (Throwable t) {
-                    player.sendMessage(ChatColor.RED + "Неверно указан ID грифа");
-                }
+                    player.sendMessage(ChatColor.GREEN + "grief list has been cleared");
                 return;
             }
-            player.sendMessage(ChatColor.RED + "Некорректная команда");
+            player.sendMessage(ChatColor.RED + "incorrect command");
         }
 
     }
