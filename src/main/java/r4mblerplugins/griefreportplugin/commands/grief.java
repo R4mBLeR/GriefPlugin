@@ -16,12 +16,11 @@ public class grief extends AbstractCommand {
     @Override
     public void execute(CommandSender sender, String label, String[] args) {
         Player player = (Player) sender;
-        if (!player.hasPermission("GriefReportPlugin.SendGriefMessage"))
-        {
+        if (!player.hasPermission("GriefReportPlugin.SendGriefMessage")) {
             player.sendMessage(ChatColor.RED + "you don't have permission");
             return;
         }
-        String name= player.getName();
+        String name = player.getName();
         Location location = player.getLocation();
         if (args.length == 0) {
             sender.sendMessage(ChatColor.RED + "write a reason");
@@ -31,6 +30,6 @@ public class grief extends AbstractCommand {
         String Reason = String.join(" ", args);
         ItemGrief Item = new ItemGrief(name, location, Reason);
         GriefList.List.add(Item);
-        sender.sendMessage(ChatColor.GOLD+"grief message send");
+        sender.sendMessage(ChatColor.GOLD + "grief message send");
     }
 }
