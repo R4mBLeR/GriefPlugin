@@ -7,6 +7,7 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import r4mblerplugins.griefreportplugin.GriefReportPlugin;
 import r4mblerplugins.griefreportplugin.classes.GriefList;
 import r4mblerplugins.griefreportplugin.classes.ItemGrief;
 
@@ -20,31 +21,31 @@ public class grief_list extends AbstractCommand {
     public void execute(CommandSender sender, String label, String[] args) {
         Player player = (Player) sender;
         if (!player.hasPermission("GriefReportPlugin.GriefListManage")) {
-            player.sendMessage(org.bukkit.ChatColor.RED + "you don't have permission");
+            player.sendMessage(GriefReportPlugin.config.getString("messages.noperm-message"));
             return;
         }
         if (GriefList.List.size() == 0) {
-            player.sendMessage(ChatColor.RED + "grief list is empty");
+            player.sendMessage(GriefReportPlugin.config.getString("messages.empty-list-message"));
             return;
         }
         if (args.length == 0) {
-            player.sendMessage("grief list:");
+            player.sendMessage(GriefReportPlugin.config.getString("messages.list-message")+":");
             for (ItemGrief item : GriefList.List) {
                 String command = "/tp " + sender.getName() + " " + item.location.getX() + " " + item.location.getY() + " " + item.location.getZ() + " ";
-                TextComponent component = new TextComponent("sender: ");
+                TextComponent component = new TextComponent(GriefReportPlugin.config.getString("list-info.sender")+": ");
                 TextComponent _name = new TextComponent(item.PlayerName);
                 _name.setColor(ChatColor.GOLD);
                 component.addExtra(_name);
-                TextComponent component1 = new TextComponent("details: ");
+                TextComponent component1 = new TextComponent(GriefReportPlugin.config.getString("list-info.details")+": ");
                 component.addExtra(component1);
                 TextComponent reason = new TextComponent(item.Reason);
                 reason.setColor(ChatColor.GOLD);
                 component.addExtra(reason);
-                TextComponent cordinates = new TextComponent(" [TELEPORT]");
+                TextComponent cordinates = new TextComponent(" "+GriefReportPlugin.config.getString("list-info.teleport"));
                 cordinates.setColor(ChatColor.GREEN);
                 cordinates.setBold(true);
                 cordinates.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command));
-                cordinates.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("click to teleport").color(ChatColor.ITALIC).create()));
+                cordinates.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(GriefReportPlugin.config.getString("list-info.click-message")).color(ChatColor.ITALIC).create()));
                 component.addExtra(cordinates);
                 player.spigot().sendMessage(component);
             }
@@ -53,18 +54,18 @@ public class grief_list extends AbstractCommand {
                 try {
                     int i = Integer.parseInt(args[1]) - 1;
                     GriefList.List.remove(i);
-                    player.sendMessage(ChatColor.GREEN + "grief delete from list");
+                    player.sendMessage(GriefReportPlugin.config.getString("messages.grief-delete-message"));
                 } catch (Throwable t) {
-                    player.sendMessage(ChatColor.RED + "incorrect grief ID");
+                    player.sendMessage(GriefReportPlugin.config.getString("messages.incorrect-id-message"));
                 }
                 return;
             }
             if (args[0].equals("clear")) {
                 GriefList.List.clear();
-                player.sendMessage(ChatColor.GREEN + "grief list has been cleared");
+                player.sendMessage(GriefReportPlugin.config.getString("messages.clear-list-message"));
                 return;
             }
-            player.sendMessage(ChatColor.RED + "incorrect command");
+            player.sendMessage(GriefReportPlugin.config.getString("messages.incorrect-command-message"));
         }
 
     }
