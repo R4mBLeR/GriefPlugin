@@ -1,5 +1,6 @@
 package r4mblerplugins.griefreportplugin.commands;
 
+import com.google.common.collect.Lists;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -10,6 +11,8 @@ import org.bukkit.entity.Player;
 import r4mblerplugins.griefreportplugin.GriefReportPlugin;
 import r4mblerplugins.griefreportplugin.classes.GriefList;
 import r4mblerplugins.griefreportplugin.classes.ItemGrief;
+
+import java.util.List;
 
 public class grief_list extends AbstractCommand {
 
@@ -68,5 +71,11 @@ public class grief_list extends AbstractCommand {
             player.sendMessage(GriefReportPlugin.config.getString("messages.incorrect-command-message"));
         }
 
+    }
+    @Override
+    public List<String> complete(CommandSender sender,String[] args)
+    {
+        if(args.length==1) return Lists.newArrayList("remove","clear");
+        return Lists.newArrayList();
     }
 }
