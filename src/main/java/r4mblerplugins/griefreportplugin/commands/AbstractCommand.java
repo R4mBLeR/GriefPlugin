@@ -7,7 +7,6 @@ import r4mblerplugins.griefreportplugin.GriefReportPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
     public AbstractCommand(String command) {
@@ -20,8 +19,8 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
     }
 
     public abstract void execute(CommandSender sender, String label, String[] args);
-    public List<String> complete(CommandSender sender, String[] args)
-    {
+
+    public List<String> complete(CommandSender sender, String[] args) {
         return null;
     }
 
@@ -32,19 +31,16 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args)
-    {
-        return filter(complete(sender, args),args);
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+        return filter(complete(sender, args), args);
     }
 
-    private List<String> filter(List<String> list, String[] args)
-    {
-        if (list==null) return null;
-        String last = args[args.length-1];
-        List<String> result=new ArrayList<>();
-        for(String arg: list)
-        {
-            if(arg.toLowerCase().startsWith(last.toLowerCase())) result.add(arg);
+    private List<String> filter(List<String> list, String[] args) {
+        if (list == null) return null;
+        String last = args[args.length - 1];
+        List<String> result = new ArrayList<>();
+        for (String arg : list) {
+            if (arg.toLowerCase().startsWith(last.toLowerCase())) result.add(arg);
         }
         return result;
     }

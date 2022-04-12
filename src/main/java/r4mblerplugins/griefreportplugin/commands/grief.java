@@ -1,11 +1,9 @@
 package r4mblerplugins.griefreportplugin.commands;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import r4mblerplugins.griefreportplugin.GriefReportPlugin;
-import r4mblerplugins.griefreportplugin.classes.GriefList;
 import r4mblerplugins.griefreportplugin.classes.ItemGrief;
 
 public class grief extends AbstractCommand {
@@ -30,7 +28,7 @@ public class grief extends AbstractCommand {
 
         String Reason = String.join(" ", args);
         ItemGrief Item = new ItemGrief(name, location, Reason);
-        GriefList.List.add(Item);
+        GriefReportPlugin.griefs.add(Item);
         sender.sendMessage(GriefReportPlugin.config.getString("messages.grief-send-message"));
     }
 }

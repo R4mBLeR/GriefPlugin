@@ -1,6 +1,7 @@
 package r4mblerplugins.griefreportplugin.commands;
 
 import com.google.common.collect.Lists;
+import com.google.gson.Gson;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -9,7 +10,6 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import r4mblerplugins.griefreportplugin.GriefReportPlugin;
-import r4mblerplugins.griefreportplugin.classes.GriefList;
 import r4mblerplugins.griefreportplugin.classes.ItemGrief;
 
 import java.util.List;
@@ -27,24 +27,24 @@ public class grief_list extends AbstractCommand {
             player.sendMessage(GriefReportPlugin.config.getString("messages.noperm-message"));
             return;
         }
-        if (GriefList.List.size() == 0) {
+        if (GriefReportPlugin.griefs.size() == 0) {
             player.sendMessage(GriefReportPlugin.config.getString("messages.empty-list-message"));
             return;
         }
         if (args.length == 0) {
-            player.sendMessage(GriefReportPlugin.config.getString("messages.list-message")+":");
-            for (ItemGrief item : GriefList.List) {
-                String command = "/tp " + sender.getName() + " " + item.location.getX() + " " + item.location.getY() + " " + item.location.getZ() + " ";
-                TextComponent component = new TextComponent(GriefReportPlugin.config.getString("list-info.sender")+": ");
+            player.sendMessage(GriefReportPlugin.config.getString("messages.list-message") + ":");
+            for (ItemGrief item : GriefReportPlugin.griefs) {
+                String command = "/tp " + sender.getName() + " " + item.x + " " + item.y + " " + item.z + " ";
+                TextComponent component = new TextComponent(GriefReportPlugin.config.getString("list-info.sender") + ": ");
                 TextComponent _name = new TextComponent(item.PlayerName);
                 _name.setColor(ChatColor.GOLD);
                 component.addExtra(_name);
-                TextComponent component1 = new TextComponent(GriefReportPlugin.config.getString("list-info.details")+": ");
+                TextComponent component1 = new TextComponent(GriefReportPlugin.config.getString("list-info.details") + ": ");
                 component.addExtra(component1);
                 TextComponent reason = new TextComponent(item.Reason);
                 reason.setColor(ChatColor.GOLD);
                 component.addExtra(reason);
-                TextComponent cordinates = new TextComponent(" "+GriefReportPlugin.config.getString("list-info.teleport"));
+                TextComponent cordinates = new TextComponent(" " + GriefReportPlugin.config.getString("list-info.teleport"));
                 cordinates.setColor(ChatColor.GREEN);
                 cordinates.setBold(true);
                 cordinates.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command));
@@ -56,7 +56,7 @@ public class grief_list extends AbstractCommand {
             if (args[0].equals("remove")) {
                 try {
                     int i = Integer.parseInt(args[1]) - 1;
-                    GriefList.List.remove(i);
+                    GriefReportPlugin.griefs.remove(i);
                     player.sendMessage(GriefReportPlugin.config.getString("messages.grief-delete-message"));
                 } catch (Throwable t) {
                     player.sendMessage(GriefReportPlugin.config.getString("messages.incorrect-id-message"));
@@ -64,7 +64,10 @@ public class grief_list extends AbstractCommand {
                 return;
             }
             if (args[0].equals("clear")) {
-                GriefList.List.clear();
+                Gson gson = new Gson();
+                String json = gson.toJson(GriefReportPlugin.griefs);
+                player.sendMessage(json);
+                GriefReportPlugin.griefs.clear();
                 player.sendMessage(GriefReportPlugin.config.getString("messages.clear-list-message"));
                 return;
             }
@@ -72,10 +75,10 @@ public class grief_list extends AbstractCommand {
         }
 
     }
+
     @Override
-    public List<String> complete(CommandSender sender,String[] args)
-    {
-        if(args.length==1) return Lists.newArrayList("remove","clear");
+    public List<String> complete(CommandSender sender, String[] args) {
+        if (args.length == 1) return Lists.newArrayList("remove", "clear");
         return Lists.newArrayList();
     }
 }
