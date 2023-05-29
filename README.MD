@@ -8,3 +8,6 @@ v1.0
 
 v1.1
 - The plugin now creates a *list.json* file with a list of griefs. Now after turning off or restarting the server, the list will not be cleared.
+
+v1.2
+- Rename all commands, now plugin have 2 commands(*/report*, */reports*)

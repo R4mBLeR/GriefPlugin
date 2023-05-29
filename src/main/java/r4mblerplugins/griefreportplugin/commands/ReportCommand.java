@@ -4,18 +4,18 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import r4mblerplugins.griefreportplugin.GriefReportPlugin;
-import r4mblerplugins.griefreportplugin.classes.ItemGrief;
+import r4mblerplugins.griefreportplugin.classes.Report;
 
-public class grief extends AbstractCommand {
+public class ReportCommand extends AbstractCommand {
 
-    public grief() {
-        super("grief");
+    public ReportCommand() {
+        super("report");
     }
 
     @Override
     public void execute(CommandSender sender, String label, String[] args) {
         Player player = (Player) sender;
-        if (!player.hasPermission("GriefReportPlugin.SendGriefMessage")) {
+        if (!player.hasPermission("GriefReportPlugin.SendReport")) {
             player.sendMessage(GriefReportPlugin.config.getString("messages.noperm-message"));
             return;
         }
@@ -27,8 +27,8 @@ public class grief extends AbstractCommand {
         }
 
         String Reason = String.join(" ", args);
-        ItemGrief Item = new ItemGrief(name, location, Reason);
+        Report Item = new Report(name, location, Reason);
         GriefReportPlugin.griefs.add(Item);
-        sender.sendMessage(GriefReportPlugin.config.getString("messages.grief-send-message"));
+        sender.sendMessage(GriefReportPlugin.config.getString("messages.report-send-message"));
     }
 }

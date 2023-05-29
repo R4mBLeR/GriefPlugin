@@ -5,22 +5,22 @@ api-version: 1.18
 authors: [ R4mBLe_ ]
 description: simply plugin for admins and moderators minecraft servers
 commands:
-  grief:
-    aliases: [g, grief, griefing]
-  grieflist:
-    aliases: [glist, grieflist, listgrief]
+  report:
+    aliases: [report]
+  reports:
+    aliases: [reports]
     usage: /<command> [reason]
 
 permissions:
   GriefPluginAllPerm.*:
     description: all permission on plugin
     children:
-      GriefReportPlugin.SendGriefMessage: true
-      GriefReportPlugin.GriefListManage: true
+      GriefReportPlugin.SendReport: true
+      GriefReportPlugin.ReportsManage: true
 
-  GriefReportPlugin.SendGriefMessage:
-    description: add grief to grief list
+  GriefReportPlugin.SendReport:
+    description: add report to reports
     default: true
-  GriefReportPlugin.GriefListManage:
-    description: open and manage grief list(for admins, moderators, helpers)
+  GriefReportPlugin.ReportsManage:
+    description: open and manage reports(for admins, moderators, helpers)
     default: op

@@ -10,20 +10,20 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import r4mblerplugins.griefreportplugin.GriefReportPlugin;
-import r4mblerplugins.griefreportplugin.classes.ItemGrief;
+import r4mblerplugins.griefreportplugin.classes.Report;
 
 import java.util.List;
 
-public class grief_list extends AbstractCommand {
+public class ReportListCommand extends AbstractCommand {
 
-    public grief_list() {
-        super("grieflist");
+    public ReportListCommand() {
+        super("reportlist");
     }
 
     @Override
     public void execute(CommandSender sender, String label, String[] args) {
         Player player = (Player) sender;
-        if (!player.hasPermission("GriefReportPlugin.GriefListManage")) {
+        if (!player.hasPermission("GriefReportPlugin.ReportsManage")) {
             player.sendMessage(GriefReportPlugin.config.getString("messages.noperm-message"));
             return;
         }
@@ -33,7 +33,7 @@ public class grief_list extends AbstractCommand {
         }
         if (args.length == 0) {
             player.sendMessage(GriefReportPlugin.config.getString("messages.list-message") + ":");
-            for (ItemGrief item : GriefReportPlugin.griefs) {
+            for (Report item : GriefReportPlugin.griefs) {
                 String command = "/tp " + sender.getName() + " " + item.x + " " + item.y + " " + item.z + " ";
                 TextComponent component = new TextComponent(GriefReportPlugin.config.getString("list-info.sender") + ": ");
                 TextComponent _name = new TextComponent(item.PlayerName);
@@ -57,7 +57,7 @@ public class grief_list extends AbstractCommand {
                 try {
                     int i = Integer.parseInt(args[1]) - 1;
                     GriefReportPlugin.griefs.remove(i);
-                    player.sendMessage(GriefReportPlugin.config.getString("messages.grief-delete-message"));
+                    player.sendMessage(GriefReportPlugin.config.getString("messages.report-delete-message"));
                 } catch (Throwable t) {
                     player.sendMessage(GriefReportPlugin.config.getString("messages.incorrect-id-message"));
                 }

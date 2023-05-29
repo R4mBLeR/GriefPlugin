@@ -5,9 +5,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import r4mblerplugins.griefreportplugin.classes.ItemGrief;
-import r4mblerplugins.griefreportplugin.commands.grief;
-import r4mblerplugins.griefreportplugin.commands.grief_list;
+import r4mblerplugins.griefreportplugin.classes.Report;
+import r4mblerplugins.griefreportplugin.commands.ReportCommand;
+import r4mblerplugins.griefreportplugin.commands.ReportListCommand;
 
 import java.io.File;
 import java.io.FileReader;
@@ -23,7 +23,7 @@ public final class GriefReportPlugin extends JavaPlugin {
 
     private static GriefReportPlugin instance;
     public static FileConfiguration config;
-    public static List<ItemGrief> griefs;
+    public static List<Report> griefs;
     private File file;
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -31,14 +31,14 @@ public final class GriefReportPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        new grief();
-        new grief_list();
+        new ReportCommand();
+        new ReportListCommand();
         config = getConfig();
         saveDefaultConfig();
         file = new File(getDataFolder(), "list.json");
         try {
             if (!file.exists()) file.createNewFile();
-            Type listType = new TypeToken<ArrayList<ItemGrief>>() {
+            Type listType = new TypeToken<ArrayList<Report>>() {
             }.getType();
             griefs = gson.fromJson(new FileReader(file), listType);
         } catch (IOException e) {

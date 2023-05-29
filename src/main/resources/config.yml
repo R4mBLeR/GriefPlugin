@@ -1,12 +1,12 @@
 messages:
   noperm-message: §cyou don't have permission
   reason-message: §cwrite a reason
-  grief-send-message: §6grief message send
-  empty-list-message: §cgrief list is empty
+  report-send-message: §6report message send
+  empty-list-message: §creport list is empty
   list-message: grief list
-  grief-delete-message: §agrief delete from list
+  report-delete-message: §areport delete from list
   incorrect-id-message: §cincorrect grief ID
-  clear-list-message: §agrief list has been cleared
+  clear-list-message: §areport list has been cleared
   incorrect-command-message: §cincorrect command
 list-info:
   sender: sender
