@@ -1,5 +1,5 @@
 - Minecraft plugin for admins and players vs griefers
-- Plugin for Minecraft 1.12-18.2
+- Plugin for Minecraft 1.12-1.18.2
 
 **RELEASE NODES**
 
